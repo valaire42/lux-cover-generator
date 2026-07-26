@@ -1,0 +1,4 @@
+interface:
+  display_name: "露可丝白板文章封面"
+  short_description: "整图生成露可丝手绘白板封面，并确定性适配多尺寸与平台裁切"
+  default_prompt: "使用 $lux-cover 根据文章规划并生成人工确认的露可丝手绘知识白板完整封面，按我指定的最终宽高输出；保留内容、完整封面、平台 calibration 和最终输出 Review。"

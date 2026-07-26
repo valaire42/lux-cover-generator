@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "shared_visual_skill_root": "skills/lux-cover",
+  "profile_overlay_path": "references/visual-profiles/lux-whiteboard-paragraph.yaml",
+  "vocabulary_path": "references/visual-vocabulary.yaml",
+  "limits": {
+    "graph_attempt_limit": 2,
+    "max_required_text_entries": 14,
+    "max_secondary_texts_per_element": 2
+  }
+}

@@ -1,0 +1,18 @@
+version: 1
+presets:
+  custom-landscape:
+    name: 自定义横版
+    ratio_hint: [1.5, 2.5]
+    v3_crop_evidence: optional
+  x-landscape:
+    name: X 横图
+    ratio_hint: [1.8, 2.5]
+    v3_crop_evidence: required-for-safe-padding
+  bilibili-landscape:
+    name: B站横版
+    ratio_hint: [1.6, 1.9]
+    v3_crop_evidence: required-for-safe-padding
+  wechat-landscape:
+    name: 微信公众号横图
+    ratio_hint: [1.8, 2.5]
+    v3_crop_evidence: required-for-safe-padding

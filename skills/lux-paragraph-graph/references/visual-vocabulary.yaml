@@ -1,0 +1,53 @@
+version: 1
+visual_types:
+  flow:
+    roles: [step]
+    min_elements: 3
+    max_elements: 5
+  timeline:
+    roles: [milestone]
+    min_elements: 3
+    max_elements: 5
+  decision-map:
+    roles: [option, recommended]
+    min_elements: 2
+    max_elements: 5
+  comparison:
+    roles: [peer]
+    min_elements: 2
+    max_elements: 5
+  concept-diagram:
+    roles: [center, component]
+    min_elements: 3
+    max_elements: 6
+icon_ids:
+  - document
+  - lightbulb
+  - checklist
+  - code
+  - cloud-start
+  - workflow-toolbox
+  - gpu-server
+  - price-volatility
+  - clock
+  - milestone
+  - route
+  - compare-scales
+  - parallel-lanes
+  - hub
+  - gears
+  - question
+  - result-check
+  - person
+  - database
+  - shield
+pose_ids:
+  - presenting
+  - pointing
+  - thinking
+  - comparing
+symbol_ids:
+  - currency-dollar
+  - star
+  - checkmark
+  - warning

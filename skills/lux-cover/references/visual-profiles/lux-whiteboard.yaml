@@ -1,0 +1,88 @@
+version: 1
+id: lux-whiteboard
+name: 露可丝手绘知识白板
+colors:
+  paper: "#F6F0E5"
+  paper_fiber: "#D8CBB7"
+  charcoal: "#1D1A17"
+  coral: "#E65D7A"
+  cyan: "#58C7CF"
+  yellow: "#F2C94C"
+allowed_colors:
+  - "#F6F0E5"
+  - "#D8CBB7"
+  - "#1D1A17"
+  - "#E65D7A"
+  - "#58C7CF"
+  - "#F2C94C"
+typography:
+  title_color: charcoal
+  emphasis_color: coral
+  weight: 800
+  max_lines: 2
+  shadow: none
+  underline_strokes: 3
+paper:
+  fiber_opacity: 0.16
+  dot_spacing: 44
+  dot_radius: 1.2
+handdrawn:
+  jitter_ratio: 0.003
+  line_width_ratio: 0.004
+  border_radius_ratio: 0.018
+  deterministic_seed: true
+composition:
+  title_region: upper-left
+  flow_region: lower-left
+  character_region: right
+  character_width_min: 0.25
+  character_width_max: 0.32
+  target_fill_min: 0.75
+  target_fill_max: 0.85
+imagegen:
+  mode: complete-cover
+  title_medium: rough-hand-drawn-marker
+  character_role: right-side-presenter
+  mandatory_style_reference: assets/style-references/whiteboard-primary.png
+  mandatory_identity_reference: assets/ip/lux.png
+  allow_code_title_overlay: false
+  allow_extra_text: false
+safe_padding:
+  background: paper-only
+  outer_border: false
+  decorations: false
+  semantic_content: false
+shared_crop_core:
+  background: source-matched-paper-only
+  sample_height_ratio: 0.125
+  min_luminance: 180
+  max_channel_spread: 45
+  max_ink_ratio: 0.01
+flow:
+  direction: horizontal
+  min_items: 3
+  max_items: 4
+  draw_labels: false
+  icon_style: charcoal-line
+  accent_order:
+    - coral
+    - cyan
+negative:
+  - enterprise blue gradients
+  - heavy shadows
+  - presentation rectangle cards
+  - dashboard cards
+  - random geometric backgrounds
+  - candy pink palettes
+  - petroleum green and orange-brown palettes
+  - glassmorphism
+  - glowing particles
+  - smooth 3D
+  - dense scenes
+  - extra text
+references:
+  primary: assets/style-references/whiteboard-primary.png
+  accepted_variants:
+    - assets/style-references/whiteboard-grid.png
+    - assets/style-references/whiteboard-tech.png
+  negative_color: assets/style-references/whiteboard-negative-color.png

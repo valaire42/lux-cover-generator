@@ -1,0 +1,18 @@
+{
+  "version": 3,
+  "identity": {
+    "id": "lux",
+    "file": "ip/lux.png",
+    "sha256": "b7ab139c08c06764bdf7a789013282ca17a376c94492e702c147c7ff8143a586",
+    "reviewed": true,
+    "core_traits": [
+      "tousled-dark-brown-bob",
+      "golden-feather-hair-ornament",
+      "amber-gold-eyes",
+      "forest-green-gold-trimmed-vest",
+      "white-stand-collar-wide-sleeve-outfit",
+      "round-gold-leaf-medallion",
+      "green-sash-with-gold-hourglass-charm"
+    ]
+  }
+}

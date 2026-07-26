@@ -1,0 +1,8 @@
+node_modules/
+runs/
+tests/
+docs/
+experiments/
+assets/references/
+.DS_Store
+*.tmp

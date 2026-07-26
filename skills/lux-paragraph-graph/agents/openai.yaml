@@ -1,0 +1,4 @@
+interface:
+  display_name: "露可丝段落说明图"
+  short_description: "将文章段落转成带露可丝形象的五类手绘说明图并精确输出尺寸"
+  default_prompt: "使用 $lux-paragraph-graph 把这段文章整理成适合正文插入的露可丝手绘说明图。"

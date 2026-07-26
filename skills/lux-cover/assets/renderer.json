@@ -1,0 +1,64 @@
+{
+  "version": 3,
+  "font": {
+    "candidates": [
+      {
+        "family": "Hiragino Sans GB",
+        "file": "/System/Library/Fonts/Hiragino Sans GB.ttc"
+      },
+      {
+        "family": "Noto Sans CJK SC",
+        "file": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+      },
+      {
+        "family": "Noto Sans CJK SC",
+        "file": "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
+      },
+      {
+        "family": "WenQuanYi Zen Hei",
+        "file": "/usr/share/fonts/wenquanyi/wqy-zenhei/wqy-zenhei.ttc"
+      },
+      {
+        "family": "Microsoft YaHei",
+        "file": "C:/Windows/Fonts/msyh.ttc"
+      }
+    ],
+    "fontconfig_file": "fonts.conf",
+    "probe": "露可丝封面测试"
+  },
+  "limits": {
+    "max_dimension": 4096,
+    "max_pixels": 16777216,
+    "min_aspect_ratio": 1.5,
+    "max_aspect_ratio": 2.5,
+    "max_outputs": 6,
+    "cover_attempt_limit": 2,
+    "max_input_pixels": 16777216
+  },
+  "title": {
+    "max_lines": 2,
+    "max_segments_per_line": 4
+  },
+  "diagram": {
+    "icon_ids": [
+      "clipboard-check",
+      "human-review",
+      "sandbox-test",
+      "evidence-verdict",
+      "lightbulb",
+      "document",
+      "loop",
+      "code"
+    ],
+    "metaphor_ids": ["evidence-loop", "learning-path", "build-cycle", "filter-funnel"]
+  },
+  "v3": {
+    "generator": "built-in-image_gen",
+    "min_dimension": 256,
+    "max_raw_ratio_relative_error": 0.03,
+    "safe_padding_background": "paper-only"
+  },
+  "profile_path": "references/visual-profiles/lux-whiteboard.yaml",
+  "platform_presets_path": "references/platform-presets.yaml",
+  "ip_manifest_path": "assets/ip/manifest.json"
+}

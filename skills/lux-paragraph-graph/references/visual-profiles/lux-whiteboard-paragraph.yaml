@@ -1,0 +1,19 @@
+version: 1
+id: lux-whiteboard-paragraph
+extends:
+  id: lux-whiteboard
+  path: skills/lux-cover/references/visual-profiles/lux-whiteboard.yaml
+composition:
+  title_scale: paragraph-heading
+  character_width_min: 0.18
+  character_width_max: 0.24
+  target_fill_min: 0.75
+  target_fill_max: 0.85
+  outer_border: false
+  full_cover_layout: false
+imagegen:
+  mode: complete-paragraph-graph
+  character_role: participating-explainer
+  redraw_character_pose: true
+  allow_code_text_overlay: false
+  allow_extra_text: false
