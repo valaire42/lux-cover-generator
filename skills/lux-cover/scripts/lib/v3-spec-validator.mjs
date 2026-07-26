@@ -2,7 +2,7 @@ import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { CoverError, readJson, sha256File, validateTransparentPng } from "./spec-validator.mjs";
 
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
+const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
 const HEX_64 = /^[a-f0-9]{64}$/;
 const CONTROL_TEXT = /[\u0000-\u001f\u007f]/;
 

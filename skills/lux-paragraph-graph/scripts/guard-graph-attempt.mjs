@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { recordGenerationAttempt } from "../../lux-cover/scripts/lib/attempt-state.mjs";
 import { loadGraphRuntime } from "./lib/config-loader.mjs";
 
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
+const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
 
 function parseArgs(argv) {
   if (argv.length !== 4 || argv[0] !== "--run" || argv[2] !== "--issue") {
