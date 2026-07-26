@@ -2,6 +2,9 @@
   "name": "lux-cover-generator",
   "version": "0.1.0",
   "private": true,
+  "description": "AI-assisted cover and paragraph graph generation using the Lux character IP in a hand-drawn knowledge whiteboard style",
+  "keywords": ["cover", "image-generation", "whiteboard", "illustration"],
+  "license": "UNLICENSED",
   "type": "module",
   "engines": {
     "node": ">=20.9.0"
