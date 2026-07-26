@@ -14,6 +14,11 @@ import {
 } from "./lib/v3-spec-validator.mjs";
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: validate-v3-run.mjs --run <run-id>
+`);
+    process.exit(0);
+  }
   if (argv.length !== 2 || argv[0] !== "--run") {
     throw new CoverError("INVALID_ARGUMENTS", "usage: validate-v3-run.mjs --run <run-id>");
   }

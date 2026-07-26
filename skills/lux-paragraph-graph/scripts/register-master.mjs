@@ -8,6 +8,11 @@ import { loadGraphRuntime } from "./lib/config-loader.mjs";
 import { readGraphSpec, resolveGraphProjectInputs } from "./lib/spec-validator.mjs";
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: register-master.mjs --spec runs/lux-paragraph-graph/<run-id>/graph-spec.json --aspect-group <id> --source <artifact>
+`);
+    process.exit(0);
+  }
   if (
     argv.length !== 6 ||
     argv[0] !== "--spec" ||

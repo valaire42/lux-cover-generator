@@ -17,9 +17,14 @@ import {
   validateAiReview
 } from "./lib/spec-validator.mjs";
 
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
+const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: validate-run.mjs --run <run-id>
+`);
+    process.exit(0);
+  }
   if (argv.length !== 2 || argv[0] !== "--run" || !SAFE_ID.test(argv[1])) {
     throw new CoverError("INVALID_ARGUMENTS", "usage: validate-run.mjs --run <run-id>");
   }

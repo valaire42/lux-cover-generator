@@ -8,6 +8,11 @@ import { CoverError, within } from "./lib/common.mjs";
 import { readV3Spec, resolveV3ProjectInputs } from "./lib/v3-spec-validator.mjs";
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: register-master.mjs --spec runs/<run-id>/cover-spec.json --aspect-group <id> --source <artifact>
+`);
+    process.exit(0);
+  }
   if (
     argv.length !== 6 ||
     argv[0] !== "--spec" ||

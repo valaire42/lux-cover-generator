@@ -6,6 +6,11 @@ import { loadGraphRuntime } from "./lib/config-loader.mjs";
 import { CoverError } from "../../lux-cover/scripts/lib/common.mjs";
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: guard-graph-attempt.mjs --run <run-id> --issue <aspect-group-id>
+`);
+    process.exit(0);
+  }
   if (argv.length !== 4 || argv[0] !== "--run" || argv[2] !== "--issue") {
     throw new CoverError("GUARD_FAILED", "usage: guard-graph-attempt.mjs --run <run-id> --issue <aspect-group-id>");
   }

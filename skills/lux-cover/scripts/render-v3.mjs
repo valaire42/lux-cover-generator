@@ -17,6 +17,11 @@ import {
 } from "./lib/v3-spec-validator.mjs";
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: render-v3.mjs --spec runs/<run-id>/cover-spec.json
+`);
+    process.exit(0);
+  }
   if (argv.length !== 2 || argv[0] !== "--spec") {
     throw new CoverError("INVALID_ARGUMENTS", "usage: render-v3.mjs --spec runs/<run-id>/cover-spec.json");
   }

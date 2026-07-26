@@ -1,16 +1,11 @@
 #!/usr/bin/env node
-import { createHash } from "node:crypto";
 import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { createContactSheet } from "../../lux-cover/scripts/lib/contact-sheet.mjs";
 import { atomicWrite } from "../../lux-cover/scripts/lib/output-validator.mjs";
-import {
-  CoverError,
-  readJson,
-  sha256File
-} from "../../lux-cover/scripts/lib/spec-validator.mjs";
+import { CoverError, readJson, sha256, sha256File, within } from "../../lux-cover/scripts/lib/common.mjs";
 import {
   loadRegisteredGraphMaster,
   renderGraphOutput
@@ -24,6 +19,10 @@ import {
 } from "./lib/spec-validator.mjs";
 
 function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(`usage: render.mjs --spec runs/lux-paragraph-graph/<run-id>/graph-spec.json\n`);
+    process.exit(0);
+  }
   if (argv.length !== 2 || argv[0] !== "--spec") {
     throw new CoverError(
       "INVALID_ARGUMENTS",
@@ -31,15 +30,6 @@ function parseArgs(argv) {
     );
   }
   return argv[1];
-}
-
-function within(candidate, parent) {
-  const relative = path.relative(parent, candidate);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
-}
-
-function sha256(buffer) {
-  return createHash("sha256").update(buffer).digest("hex");
 }
 
 async function approvedMaster({ group, masterOutput, spec, runtime, projectRoot, runDir }) {

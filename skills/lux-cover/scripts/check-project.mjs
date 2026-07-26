@@ -8,6 +8,11 @@ import { renderFontProbe } from "./lib/text-layer.mjs";
 import { loadGraphRuntime } from "../../lux-paragraph-graph/scripts/lib/config-loader.mjs";
 import { projectRoot } from "./lib/common.mjs";
 
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  process.stdout.write("usage: check-project.mjs — 验证项目完整性和脚本语法\n");
+  process.exit(0);
+}
+
 const required = [
   "package.json",
   "skills/lux-cover/SKILL.md",
