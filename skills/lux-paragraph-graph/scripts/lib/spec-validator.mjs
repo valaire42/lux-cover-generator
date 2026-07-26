@@ -1,65 +1,13 @@
 import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
+import { validateTransparentPng } from "../../../lux-cover/scripts/lib/spec-validator.mjs";
 import {
-  CoverError,
-  readJson,
-  sha256File,
-  validateTransparentPng
-} from "../../../lux-cover/scripts/lib/spec-validator.mjs";
+  CoverError, exactKeys, fail, object, readJson, safeId,
+  sameValues, sha256File, text, within
+} from "../../../lux-cover/scripts/lib/common.mjs";
 
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
 const HEX_64 = /^[a-f0-9]{64}$/;
-const CONTROL_TEXT = /[\u0000-\u001f\u007f]/;
 
-function fail(code, message) {
-  throw new CoverError(code, message);
-}
-
-function object(value, label) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    fail("INVALID_GRAPH_SPEC", `${label} must be an object`);
-  }
-}
-
-function exactKeys(value, allowed, label) {
-  object(value, label);
-  const unknown = Object.keys(value).filter((key) => !allowed.includes(key));
-  const missing = allowed.filter((key) => !(key in value));
-  if (unknown.length) fail("INVALID_GRAPH_SPEC", `${label} has unknown field(s): ${unknown.join(", ")}`);
-  if (missing.length) fail("INVALID_GRAPH_SPEC", `${label} is missing field(s): ${missing.join(", ")}`);
-}
-
-function safeId(value, label) {
-  if (typeof value !== "string" || !SAFE_ID.test(value)) {
-    fail("INVALID_GRAPH_SPEC", `${label} must be a lowercase hyphenated identifier`);
-  }
-}
-
-function text(value, label) {
-  if (typeof value !== "string" || !value.trim()) {
-    fail("INVALID_GRAPH_SPEC", `${label} must be non-empty text`);
-  }
-  if (CONTROL_TEXT.test(value)) fail("INVALID_GRAPH_SPEC", `${label} contains a control character`);
-}
-
-function textArray(value, label, { min = 0, max = Number.MAX_SAFE_INTEGER } = {}) {
-  if (!Array.isArray(value) || value.length < min || value.length > max) {
-    fail("INVALID_GRAPH_SPEC", `${label} must contain ${min} to ${max} entries`);
-  }
-  value.forEach((entry, index) => text(entry, `${label}[${index}]`));
-}
-
-function uniqueStringArray(value, label, allowed, options = {}) {
-  textArray(value, label, options);
-  if (new Set(value).size !== value.length) fail("INVALID_GRAPH_SPEC", `${label} contains duplicates`);
-  for (const item of value) {
-    if (!allowed.includes(item)) fail("INVALID_GRAPH_SPEC", `${label} contains unknown value: ${item}`);
-  }
-}
-
-function sameValues(left, right) {
-  return left.length === right.length && left.every((value, index) => value === right[index]);
-}
 
 export function ratiosEqual(left, right) {
   return left.width * right.height === right.width * left.height;
@@ -261,11 +209,6 @@ export function validateGraphSpecShape(spec, runtime) {
   const elementIds = new Set(spec.plan.elements.map((element) => element.id));
   validateCharacter(spec.character, runtime, elementIds);
   validateOutputs(spec, runtime);
-}
-
-function within(candidate, parent) {
-  const relative = path.relative(parent, candidate);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
 export async function readApprovedReview(filePath, expected) {

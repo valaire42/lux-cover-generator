@@ -1,22 +1,7 @@
-import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import sharp from "sharp";
+import { CoverError, fail, sha256File } from "./common.mjs";
 
-export class CoverError extends Error {
-  constructor(code, message) {
-    super(message);
-    this.name = "CoverError";
-    this.code = code;
-  }
-}
-
-function fail(code, message) {
-  throw new CoverError(code, message);
-}
-
-export async function sha256File(filePath) {
-  return createHash("sha256").update(await readFile(filePath)).digest("hex");
-}
+export { CoverError, sha256File };
 
 export async function validateTransparentPng(filePath, config, label = "identity reference") {
   const image = sharp(filePath, { limitInputPixels: config.limits.max_input_pixels });
@@ -46,12 +31,4 @@ export async function validateTransparentPng(filePath, config, label = "identity
     }
   }
   return metadata;
-}
-
-export async function readJson(filePath, label) {
-  try {
-    return JSON.parse(await readFile(filePath, "utf8"));
-  } catch (error) {
-    fail("INVALID_SPEC", `${label} could not be read as JSON: ${error.message}`);
-  }
 }

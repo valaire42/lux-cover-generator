@@ -3,15 +3,15 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { recordGenerationAttempt } from "../../lux-cover/scripts/lib/attempt-state.mjs";
 import { loadGraphRuntime } from "./lib/config-loader.mjs";
-
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
+import { CoverError } from "../../lux-cover/scripts/lib/common.mjs";
 
 function parseArgs(argv) {
   if (argv.length !== 4 || argv[0] !== "--run" || argv[2] !== "--issue") {
-    throw new Error("usage: guard-graph-attempt.mjs --run <run-id> --issue <aspect-group-id>");
+    throw new CoverError("GUARD_FAILED", "usage: guard-graph-attempt.mjs --run <run-id> --issue <aspect-group-id>");
   }
-  if (!SAFE_ID.test(argv[1]) || !SAFE_ID.test(argv[3])) {
-    throw new Error("run and issue must be lowercase hyphenated identifiers");
+  if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/.test(argv[1]) ||
+      !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/.test(argv[3])) {
+    throw new CoverError("GUARD_FAILED", "run and issue must be lowercase hyphenated identifiers (min 2 chars)");
   }
   return { run: argv[1], issue: argv[3] };
 }

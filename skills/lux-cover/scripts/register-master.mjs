@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadRuntimeConfig } from "./lib/config-loader.mjs";
 import { registerMasterArtifact } from "./lib/master-artifact.mjs";
-import { CoverError } from "./lib/spec-validator.mjs";
+import { CoverError, within } from "./lib/common.mjs";
 import { readV3Spec, resolveV3ProjectInputs } from "./lib/v3-spec-validator.mjs";
 
 function parseArgs(argv) {
@@ -20,11 +20,6 @@ function parseArgs(argv) {
     );
   }
   return { spec: argv[1], group: argv[3], source: argv[5] };
-}
-
-function within(candidate, parent) {
-  const relative = path.relative(parent, candidate);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
 async function main() {

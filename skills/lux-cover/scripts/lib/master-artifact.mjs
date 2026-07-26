@@ -1,33 +1,10 @@
-import { createHash } from "node:crypto";
 import { lstat, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { atomicWrite } from "./output-validator.mjs";
-import { CoverError, sha256File } from "./spec-validator.mjs";
+import { sha256File } from "./spec-validator.mjs";
+import { CoverError, exactKeys, fail, sha256, within } from "./common.mjs";
 import { readApprovedReview } from "./v3-spec-validator.mjs";
-
-function fail(code, message) {
-  throw new CoverError(code, message);
-}
-
-function exactKeys(value, allowed, label) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    fail("INVALID_MASTER_ARTIFACT", `${label} must be an object`);
-  }
-  const unknown = Object.keys(value).filter((key) => !allowed.includes(key));
-  const missing = allowed.filter((key) => !(key in value));
-  if (unknown.length) fail("INVALID_MASTER_ARTIFACT", `${label} has unknown field(s): ${unknown.join(", ")}`);
-  if (missing.length) fail("INVALID_MASTER_ARTIFACT", `${label} is missing field(s): ${missing.join(", ")}`);
-}
-
-function sha256Buffer(buffer) {
-  return createHash("sha256").update(buffer).digest("hex");
-}
-
-function within(candidate, parent) {
-  const relative = path.relative(parent, candidate);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
-}
 
 function masterDimensions(group, masterOutput) {
   return group.semantic_core ?? masterOutput;
@@ -161,7 +138,7 @@ export async function registerMasterArtifact({
   const scale = Math.max(target.width / rawMeta.width, target.height / rawMeta.height);
   const scaledWidth = rawMeta.width * scale;
   const scaledHeight = rawMeta.height * scale;
-  const rawSha256 = await sha256Buffer(source);
+  const rawSha256 = await sha256(source);
   const masterSha256 = await sha256Buffer(master);
   const rawRelative = path.relative(projectRoot, path.join(groupDir, "raw.png"));
   const masterRelative = path.relative(projectRoot, path.join(groupDir, "master.png"));

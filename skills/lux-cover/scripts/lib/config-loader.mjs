@@ -1,29 +1,23 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import YAML from "yaml";
-import { CoverError, readJson } from "./spec-validator.mjs";
+import { CoverError, object, readJson, fail } from "./common.mjs";
 
 async function readYaml(filePath, label) {
   try {
     return YAML.parse(await readFile(filePath, "utf8"));
   } catch (error) {
-    throw new CoverError("INVALID_CONFIG", `${label} could not be read as YAML: ${error.message}`);
-  }
-}
-
-function requireObject(value, label) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new CoverError("INVALID_CONFIG", `${label} must be an object`);
+    fail("INVALID_CONFIG", `${label} could not be read as YAML: ${error.message}`);
   }
 }
 
 async function resolveFont(config) {
-  requireObject(config.font, "font config");
+  object(config.font, "font config");
   if (!Array.isArray(config.font.candidates) || config.font.candidates.length === 0) {
     throw new CoverError("INVALID_CONFIG", "font config must provide candidates");
   }
   for (const [index, candidate] of config.font.candidates.entries()) {
-    requireObject(candidate, `font candidate ${index}`);
+    object(candidate, `font candidate ${index}`);
     if (
       typeof candidate.family !== "string" ||
       !candidate.family.trim() ||
@@ -68,14 +62,14 @@ function validateConfig(config, profile, platforms, manifest) {
   if ("layouts" in config || "asset_attempt_limit" in config.limits) {
     throw new CoverError("INVALID_CONFIG", "renderer config still contains retired V2 fields");
   }
-  requireObject(profile.colors, "profile colors");
+  object(profile.colors, "profile colors");
   if (profile.id !== "lux-whiteboard" || profile.version !== 1) {
     throw new CoverError("INVALID_CONFIG", "visual profile must be lux-whiteboard version 1");
   }
   if (!Array.isArray(profile.allowed_colors) || profile.allowed_colors.length < 4) {
     throw new CoverError("INVALID_CONFIG", "visual profile allowed_colors is incomplete");
   }
-  requireObject(platforms.presets, "platform presets");
+  object(platforms.presets, "platform presets");
   if (platforms.version !== 1) {
     throw new CoverError("INVALID_CONFIG", "platform presets must use version 1");
   }

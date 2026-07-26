@@ -1,50 +1,11 @@
 import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
-import { CoverError, readJson, sha256File, validateTransparentPng } from "./spec-validator.mjs";
+import { validateTransparentPng } from "./spec-validator.mjs";
+import {
+  CoverError, exactKeys, fail, object, readJson, safeId,
+  sameValues, sha256File, stringArray, text, within
+} from "./common.mjs";
 
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
-const HEX_64 = /^[a-f0-9]{64}$/;
-const CONTROL_TEXT = /[\u0000-\u001f\u007f]/;
-
-function fail(code, message) {
-  throw new CoverError(code, message);
-}
-
-function object(value, label) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    fail("INVALID_V3_SPEC", `${label} must be an object`);
-  }
-}
-
-function exactKeys(value, allowed, label) {
-  object(value, label);
-  const unknown = Object.keys(value).filter((key) => !allowed.includes(key));
-  const missing = allowed.filter((key) => !(key in value));
-  if (unknown.length) fail("INVALID_V3_SPEC", `${label} has unknown field(s): ${unknown.join(", ")}`);
-  if (missing.length) fail("INVALID_V3_SPEC", `${label} is missing field(s): ${missing.join(", ")}`);
-}
-
-function safeId(value, label) {
-  if (typeof value !== "string" || !SAFE_ID.test(value)) {
-    fail("INVALID_V3_SPEC", `${label} must be a lowercase hyphenated identifier`);
-  }
-}
-
-function text(value, label) {
-  if (typeof value !== "string" || value.trim().length === 0) {
-    fail("INVALID_V3_SPEC", `${label} must be non-empty text`);
-  }
-  if (CONTROL_TEXT.test(value)) fail("INVALID_V3_SPEC", `${label} contains a control character`);
-}
-
-function stringArray(value, label) {
-  if (!Array.isArray(value) || value.length === 0) fail("INVALID_V3_SPEC", `${label} must be a non-empty array`);
-  value.forEach((entry, index) => text(entry, `${label}[${index}]`));
-}
-
-function sameValues(left, right) {
-  return left.length === right.length && left.every((value, index) => value === right[index]);
-}
 
 function sameSharedCropContract(left, right) {
   if (
@@ -311,11 +272,6 @@ export function validateV3SpecShape(spec, config, platforms, manifest) {
       fail("INVALID_V3_SPEC", `${output.id} references an unknown aspect_group_id`);
     }
   }
-}
-
-function within(candidate, parent) {
-  const relative = path.relative(parent, candidate);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
 export async function readApprovedReview(filePath, expected) {

@@ -2,14 +2,11 @@
 import { lstat, readFile, readdir, readlink } from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 import { loadRuntimeConfig } from "./lib/config-loader.mjs";
 import { sha256File, validateTransparentPng } from "./lib/spec-validator.mjs";
 import { renderFontProbe } from "./lib/text-layer.mjs";
 import { loadGraphRuntime } from "../../lux-paragraph-graph/scripts/lib/config-loader.mjs";
-
-const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const projectRoot = path.resolve(scriptDir, "../../..");
+import { projectRoot } from "./lib/common.mjs";
 
 const required = [
   "package.json",

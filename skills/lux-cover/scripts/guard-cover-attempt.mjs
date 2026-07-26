@@ -3,16 +3,16 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { recordGenerationAttempt } from "./lib/attempt-state.mjs";
-
-const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
+import { CoverError } from "./lib/common.mjs";
 
 function parseArgs(argv) {
   if (argv.length !== 4 || argv[0] !== "--run" || argv[2] !== "--issue") {
-    throw new Error("usage: guard-cover-attempt.mjs --run <run-id> --issue <aspect-group-id>");
+    throw new CoverError("GUARD_FAILED", "usage: guard-cover-attempt.mjs --run <run-id> --issue <aspect-group-id>");
   }
   const values = { run: argv[1], issue: argv[3] };
-  if (!SAFE_ID.test(values.run) || !SAFE_ID.test(values.issue)) {
-    throw new Error("run and issue must be lowercase hyphenated identifiers");
+  if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/.test(values.run) ||
+      !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/.test(values.issue)) {
+    throw new CoverError("GUARD_FAILED", "run and issue must be lowercase hyphenated identifiers (min 2 chars)");
   }
   return values;
 }

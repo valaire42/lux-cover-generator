@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { createHash } from "node:crypto";
 import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,7 +8,7 @@ import { createContactSheet } from "./lib/contact-sheet.mjs";
 import { loadRegisteredMaster } from "./lib/master-artifact.mjs";
 import { atomicWrite } from "./lib/output-validator.mjs";
 import { loadApprovedCalibration, renderV3Output } from "./lib/platform-adapter.mjs";
-import { CoverError, sha256File } from "./lib/spec-validator.mjs";
+import { CoverError, sha256, sha256File, within } from "./lib/common.mjs";
 import {
   readApprovedReview,
   readV3Spec,
@@ -22,15 +21,6 @@ function parseArgs(argv) {
     throw new CoverError("INVALID_ARGUMENTS", "usage: render-v3.mjs --spec runs/<run-id>/cover-spec.json");
   }
   return argv[1];
-}
-
-function within(candidate, parent) {
-  const relative = path.relative(parent, candidate);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
-}
-
-function sha256(buffer) {
-  return createHash("sha256").update(buffer).digest("hex");
 }
 
 async function approvedMaster({ group, masterOutput, spec, runtime, projectRoot, runDir }) {
