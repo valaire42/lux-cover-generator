@@ -78,6 +78,8 @@ skills/lux-cover/assets/style-references/
 ```text
 .
 ├── skills/
+│   ├── lib/
+│   │   └── common.mjs
 │   ├── lux-cover/
 │   │   ├── SKILL.md
 │   │   ├── agents/
@@ -92,11 +94,13 @@ skills/lux-cover/assets/style-references/
 │       └── scripts/
 ├── .agents/skills/
 ├── .claude/skills/
+├── ASSET-LICENSE.md
+├── LICENSE
 ├── package.json
 └── README.md
 ```
 
-`skills/<name>/` 是唯一正式来源；`.agents/skills/` 和 `.claude/skills/` 只包含指向正式目录的发现软链接，不维护多份 Skill 文本。
+`skills/lux-cover/` 和 `skills/lux-paragraph-graph/` 是两套 Skill 的正式来源，`skills/lib/` 保存两者共用的运行时代码；`.agents/skills/` 和 `.claude/skills/` 只包含指向正式 Skill 目录的发现软链接，不维护多份 Skill 文本。
 
 运行产生的文章、Prompt、Review、Raw、Master、预览和验证报告保存在 `runs/`，该目录不会提交到 Git。
 
@@ -104,7 +108,8 @@ skills/lux-cover/assets/style-references/
 
 - Codex，并且可以使用内置 `image_gen`；
 - Node.js `>= 20.9.0`；
-- npm。
+- npm；
+- 可用的中文字体。项目会自动寻找配置中的常见字体，也可以通过 `LUX_FONT_FILE` 指定字体文件，并可选设置 `LUX_FONT_FAMILY`。
 
 安装确定性图片处理依赖：
 
@@ -115,6 +120,14 @@ npm install
 检查两个 Skills 的文件完整性、脚本语法、配置接线、素材 hash 和软链接：
 
 ```bash
+npm run build
+```
+
+如果系统没有命中内置字体候选，可以显式指定字体：
+
+```bash
+LUX_FONT_FILE=/absolute/path/to/chinese-font.ttf \
+LUX_FONT_FAMILY="Noto Sans CJK SC" \
 npm run build
 ```
 
@@ -149,6 +162,17 @@ ln -s /absolute/path/to/lux-cover-generator/skills/lux-paragraph-graph \
 ```
 
 这样仍然只需要维护本仓库中的一份 Skill 文本。
+
+## 许可证
+
+源代码和文档采用 [MIT License](LICENSE)，允许使用、修改和分发。
+
+以下视觉素材不包含在 MIT 授权中，未经单独书面授权不得复制、修改、分发或使用：
+
+- `skills/lux-cover/assets/ip/lux.png`；
+- `skills/lux-cover/assets/style-references/` 中的 PNG 文件。
+
+详细边界见 [ASSET-LICENSE.md](ASSET-LICENSE.md)。复用工作流时，请替换为自己拥有或已获授权的视觉素材，并同步更新身份 manifest、Prompt、视觉 Profile 和相关 hash。
 
 ## 当前边界
 
