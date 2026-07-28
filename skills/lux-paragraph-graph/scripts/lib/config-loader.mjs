@@ -4,7 +4,7 @@ import YAML from "yaml";
 import { loadRuntimeConfig as loadCoverRuntime } from "../../../lux-cover/scripts/lib/config-loader.mjs";
 import {
   CoverError, exactKeys, fail, object, readJson, within
-} from "../../../lux-cover/scripts/lib/common.mjs";
+} from "../../../lib/common.mjs";
 
 async function readYaml(filePath, label) {
   try {

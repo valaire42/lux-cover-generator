@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { CoverError, fail, sha256File } from "./common.mjs";
+import { CoverError, fail, sha256File } from "../../../lib/common.mjs";
 
 export { CoverError, sha256File };
 

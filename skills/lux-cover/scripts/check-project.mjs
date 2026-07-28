@@ -6,7 +6,7 @@ import { loadRuntimeConfig } from "./lib/config-loader.mjs";
 import { sha256File, validateTransparentPng } from "./lib/spec-validator.mjs";
 import { renderFontProbe } from "./lib/text-layer.mjs";
 import { loadGraphRuntime } from "../../lux-paragraph-graph/scripts/lib/config-loader.mjs";
-import { projectRoot } from "./lib/common.mjs";
+import { projectRoot } from "../../lib/common.mjs";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   process.stdout.write("usage: check-project.mjs — 验证项目完整性和脚本语法\n");
@@ -42,6 +42,7 @@ const required = [
   "skills/lux-cover/scripts/lib/master-artifact.mjs",
   "skills/lux-cover/scripts/lib/platform-adapter.mjs",
   "skills/lux-cover/scripts/lib/whiteboard-svg.mjs",
+  "skills/lib/common.mjs",
   "skills/lux-paragraph-graph/SKILL.md",
   "skills/lux-paragraph-graph/agents/openai.yaml",
   "skills/lux-paragraph-graph/assets/runtime.json",
@@ -180,7 +181,8 @@ async function checkPlaceholders() {
   const files = (
     await Promise.all([
       walk(path.join(projectRoot, "skills/lux-cover")),
-      walk(path.join(projectRoot, "skills/lux-paragraph-graph"))
+      walk(path.join(projectRoot, "skills/lux-paragraph-graph")),
+      walk(path.join(projectRoot, "skills/lib"))
     ])
   ).flat();
   const forbidden = [

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { recordGenerationAttempt } from "./lib/attempt-state.mjs";
-import { CoverError } from "./lib/common.mjs";
+import { CoverError } from "../../lib/common.mjs";
 
 function parseArgs(argv) {
   if (argv.includes("--help") || argv.includes("-h")) {

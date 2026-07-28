@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { recordGenerationAttempt } from "../../lux-cover/scripts/lib/attempt-state.mjs";
 import { loadGraphRuntime } from "./lib/config-loader.mjs";
-import { CoverError } from "../../lux-cover/scripts/lib/common.mjs";
+import { CoverError } from "../../lib/common.mjs";
 
 function parseArgs(argv) {
   if (argv.includes("--help") || argv.includes("-h")) {

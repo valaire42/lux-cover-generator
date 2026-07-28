@@ -4,8 +4,10 @@ import { validateTransparentPng } from "./spec-validator.mjs";
 import {
   CoverError, exactKeys, fail, object, readJson, safeId,
   sameValues, sha256File, stringArray, text, within
-} from "./common.mjs";
+} from "../../../lib/common.mjs";
 
+const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])$/;
+const HEX_64 = /^[a-f0-9]{64}$/;
 
 function sameSharedCropContract(left, right) {
   if (

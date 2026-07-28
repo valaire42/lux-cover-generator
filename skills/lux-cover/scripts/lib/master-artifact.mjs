@@ -3,7 +3,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { atomicWrite } from "./output-validator.mjs";
 import { sha256File } from "./spec-validator.mjs";
-import { CoverError, exactKeys, fail, sha256, within } from "./common.mjs";
+import { CoverError, exactKeys, fail, sha256, within } from "../../../lib/common.mjs";
 import { readApprovedReview } from "./v3-spec-validator.mjs";
 
 function masterDimensions(group, masterOutput) {
@@ -139,7 +139,7 @@ export async function registerMasterArtifact({
   const scaledWidth = rawMeta.width * scale;
   const scaledHeight = rawMeta.height * scale;
   const rawSha256 = await sha256(source);
-  const masterSha256 = await sha256Buffer(master);
+  const masterSha256 = await sha256(master);
   const rawRelative = path.relative(projectRoot, path.join(groupDir, "raw.png"));
   const masterRelative = path.relative(projectRoot, path.join(groupDir, "master.png"));
   const attemptDir = path.join(groupDir, "attempts", `attempt-${attempt}`);

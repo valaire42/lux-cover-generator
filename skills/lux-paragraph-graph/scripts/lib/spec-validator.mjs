@@ -4,10 +4,28 @@ import { validateTransparentPng } from "../../../lux-cover/scripts/lib/spec-vali
 import {
   CoverError, exactKeys, fail, object, readJson, safeId,
   sameValues, sha256File, text, within
-} from "../../../lux-cover/scripts/lib/common.mjs";
+} from "../../../lib/common.mjs";
 
 const HEX_64 = /^[a-f0-9]{64}$/;
 
+function textArray(value, label, { min = 0, max = Number.POSITIVE_INFINITY } = {}) {
+  if (!Array.isArray(value) || value.length < min || value.length > max) {
+    fail("INVALID_GRAPH_SPEC", `${label} must contain ${min} to ${max} text entries`);
+  }
+  value.forEach((entry, index) => text(entry, `${label}[${index}]`));
+}
+
+function uniqueStringArray(value, label, allowed) {
+  textArray(value, label);
+  if (new Set(value).size !== value.length) {
+    fail("INVALID_GRAPH_SPEC", `${label} must contain unique entries`);
+  }
+  for (const entry of value) {
+    if (!allowed.includes(entry)) {
+      fail("INVALID_GRAPH_SPEC", `${label} contains unsupported entry: ${entry}`);
+    }
+  }
+}
 
 export function ratiosEqual(left, right) {
   return left.width * right.height === right.width * left.height;

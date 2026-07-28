@@ -2,7 +2,7 @@ import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { backgroundSvg } from "./whiteboard-svg.mjs";
-import { CoverError, exactKeys, fail, sha256, sha256File, within } from "./common.mjs";
+import { CoverError, exactKeys, fail, sha256, sha256File, within } from "../../../lib/common.mjs";
 import { ratiosEqual, readApprovedReview } from "./v3-spec-validator.mjs";
 
 function validateNormalizedCrop(crop) {

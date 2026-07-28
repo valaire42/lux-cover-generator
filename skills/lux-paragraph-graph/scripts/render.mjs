@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { createContactSheet } from "../../lux-cover/scripts/lib/contact-sheet.mjs";
 import { atomicWrite } from "../../lux-cover/scripts/lib/output-validator.mjs";
-import { CoverError, readJson, sha256, sha256File, within } from "../../lux-cover/scripts/lib/common.mjs";
+import { CoverError, readJson, sha256, sha256File, within } from "../../lib/common.mjs";
 import {
   loadRegisteredGraphMaster,
   renderGraphOutput

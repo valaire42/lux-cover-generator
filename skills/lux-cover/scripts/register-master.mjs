@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadRuntimeConfig } from "./lib/config-loader.mjs";
 import { registerMasterArtifact } from "./lib/master-artifact.mjs";
-import { CoverError, within } from "./lib/common.mjs";
+import { CoverError, within } from "../../lib/common.mjs";
 import { readV3Spec, resolveV3ProjectInputs } from "./lib/v3-spec-validator.mjs";
 
 function parseArgs(argv) {

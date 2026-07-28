@@ -1,7 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import YAML from "yaml";
-import { CoverError, object, readJson, fail } from "./common.mjs";
+import { CoverError, object, readJson, fail } from "../../../lib/common.mjs";
 
 async function readYaml(filePath, label) {
   try {

@@ -8,7 +8,7 @@ import { createContactSheet } from "./lib/contact-sheet.mjs";
 import { loadRegisteredMaster } from "./lib/master-artifact.mjs";
 import { atomicWrite } from "./lib/output-validator.mjs";
 import { loadApprovedCalibration, renderV3Output } from "./lib/platform-adapter.mjs";
-import { CoverError, sha256, sha256File, within } from "./lib/common.mjs";
+import { CoverError, sha256, sha256File, within } from "../../lib/common.mjs";
 import {
   readApprovedReview,
   readV3Spec,

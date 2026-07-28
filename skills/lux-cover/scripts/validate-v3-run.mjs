@@ -5,7 +5,8 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { loadRuntimeConfig } from "./lib/config-loader.mjs";
 import { loadRegisteredMaster } from "./lib/master-artifact.mjs";
-import { CoverError, readJson, sha256File } from "./lib/spec-validator.mjs";
+import { CoverError, sha256File } from "./lib/spec-validator.mjs";
+import { readJson } from "../../lib/common.mjs";
 import {
   readApprovedReview,
   readV3Spec,
